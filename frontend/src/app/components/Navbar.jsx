@@ -60,7 +60,6 @@ const Navbar = () => {
                 About
               </div>
             </Link>
-          
           </div>
         </div>
       </CSSTransition>
