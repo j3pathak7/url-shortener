@@ -30,10 +30,22 @@ const ShortenForm = () => {
     }
   };
 
+  const handleDownloadQrCode = () => {
+    // Create a temporary anchor element to trigger download
+    const downloadLink = document.createElement("a");
+    downloadLink.href = `data:image/png;base64,${qrCode}`;
+    downloadLink.download = "qr_code.png";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-2xl font-bold mb-4 text-center">URL Shortener</h1>
+        <h1 className="text-2xl font-bold mb-4 text-center">
+          URL Shortener and QR generator
+        </h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="url" className="block font-bold mb-2">
@@ -72,9 +84,23 @@ const ShortenForm = () => {
                 </a>
               </p>
               {qrCode && (
-                <div className="mt-4 flex justify-center">
-                  <img src={`data:image/png;base64,${qrCode}`} alt="QR Code" />
-                </div>
+                <>
+                  <div className="mt-4 flex justify-center items-center">
+                    <img
+                      src={`data:image/png;base64,${qrCode}`}
+                      alt="QR Code"
+                      className="mr-2"
+                    />
+                  </div>
+                  <div className="flex justify-center">
+                    <button
+                      onClick={handleDownloadQrCode}
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      Download QR Code
+                    </button>
+                  </div>
+                </>
               )}
             </div>
           )}
