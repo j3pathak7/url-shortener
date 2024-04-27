@@ -60,22 +60,7 @@ const Navbar = () => {
                 About
               </div>
             </Link>
-            <Link href="/services">
-              <div
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium cursor-pointer"
-                onClick={toggleNav}
-              >
-                Services
-              </div>
-            </Link>
-            <Link href="/contact">
-              <div
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium cursor-pointer"
-                onClick={toggleNav}
-              >
-                Contact
-              </div>
-            </Link>
+          
           </div>
         </div>
       </CSSTransition>
