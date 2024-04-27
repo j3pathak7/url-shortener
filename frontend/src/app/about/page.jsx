@@ -13,10 +13,10 @@ const AboutPage = () => {
               sharing your online content easier than ever before.
             </p>
             <p className="text-lg mb-6">
-              Whether it's shortening URLs, creating branded links, or any other
-              online management task, we've got you covered. Our team is
-              constantly working to improve our services and deliver the best
-              possible experience to our users.
+              Whether it`&apos;`s shortening URLs, creating branded links, or
+              any other online management task, we`&apos;`ve got you covered.
+              Our team is constantly working to improve our services and deliver
+              the best possible experience to our users.
             </p>
             <p className="text-lg mb-6">
               Thank you for choosing our platform. We look forward to serving

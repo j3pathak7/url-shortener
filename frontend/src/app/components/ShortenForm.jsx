@@ -51,7 +51,7 @@ const HeroSection = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-base font-semibold text-indigo-600 uppercase tracking-wide">
+        <h2 className="text-base font-semibold text-amber-600 uppercase tracking-wide">
           URL Shortener & QR Code Generator
         </h2>
         <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">
