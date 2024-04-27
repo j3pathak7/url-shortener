@@ -2,3 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+.nav-transition-enter {
+    transform: translateX(-100%);
+}
+
+.nav-transition-enter-active {
+    transform: translateX(0);
+    transition: transform 200ms;
+}
+
+.nav-transition-exit {
+    transform: translateX(0);
+}
+
+.nav-transition-exit-active {
+    transform: translateX(-100%);
+    transition: transform 200ms;
+}
