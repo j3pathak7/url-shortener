@@ -27,8 +27,8 @@ class ShortenURLView(APIView):
                 short_code=short_url).first()
             if existing_url:
                 serializer = ShortenedURLSerializer(existing_url)
-                qr_code_data = generate_qr_code(short_url)
                 response_data = serializer.data
+                qr_code_data = generate_qr_code(original_url)
                 response_data['qr_code'] = qr_code_data
                 return Response(response_data, status=status.HTTP_200_OK)
 
@@ -36,33 +36,39 @@ class ShortenURLView(APIView):
             shortened_url = ShortenedURL.objects.create(
                 original_url=original_url, short_code=short_url)
             serializer = ShortenedURLSerializer(shortened_url)
-            qr_code_data = generate_qr_code(short_url)
             response_data = serializer.data
+            qr_code_data = generate_qr_code(original_url)
             response_data['qr_code'] = qr_code_data
             return Response(response_data, status=status.HTTP_201_CREATED)
+        except pyshorteners.ShorteningErrorException as e:
+            return Response({'error': f'Failed to shorten URL: {e}'}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-def generate_qr_code(url):
-    # Create a QR code instance
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
+def generate_qr_code(url, box_size=10, border=4, version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, fill_color="black", back_color="white"):
+    try:
+        # Create a QR code instance
+        qr = qrcode.QRCode(
+            version=version,
+            error_correction=error_correction,
+            box_size=box_size,
+            border=border,
+        )
 
-    # Add the URL to the QR code
-    qr.add_data(url)
-    qr.make(fit=True)
+        # Add the URL to the QR code
+        qr.add_data(url)
+        qr.make(fit=True)
 
-    # Generate the QR code image
-    img = qr.make_image(fill_color="black", back_color="white")
+        # Generate the QR code image
+        img = qr.make_image(fill_color=fill_color, back_color=back_color)
 
-    # Convert the image to base64 string
-    buffer = io.BytesIO()
-    img.save(buffer, format="PNG")
-    qr_code_img = base64.b64encode(buffer.getvalue()).decode('utf-8')
+        # Convert the image to base64 string
+        buffer = io.BytesIO()
+        img.save(buffer, format="PNG")
+        qr_code_img = base64.b64encode(buffer.getvalue()).decode('utf-8')
 
-    return qr_code_img
+        return qr_code_img
+    except Exception as e:
+        # Handle QR code generation errors
+        return None
